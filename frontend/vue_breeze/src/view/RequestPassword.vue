@@ -1,6 +1,11 @@
 <template>
     <AuthLayout title="Request From your Email">
-        <form @submit.prevent="auth.handleForgotPassword(email)" class="my-10">
+        <form @submit.prevent="auth.handleForgotPassword(email)" class="my-3">
+            <div v-if="auth.status" class="text-center">
+                        <p class="text-blue-500 pt-2">
+                            {{ auth.status }}
+                        </p>
+                    </div>
             <div class="flex flex-col space-y-5">
                 <label for="email">
                     <p class="font-medium text-slate-700 pb-2">Email address</p>

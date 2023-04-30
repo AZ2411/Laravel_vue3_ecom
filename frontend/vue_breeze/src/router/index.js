@@ -37,13 +37,18 @@ const router = createRouter({
 })
 router.beforeEach((to, from, next) => {
     const auth = useAuthStore();
-    if (to.meta.requiresAuth && !auth.authUser.email) {
-        next({ name: 'Login' })
-    } else if (to.meta.requiresGuest && auth.authUser.email) {
-        next({ name: 'Home' })
-    } else {
-        next();
-    }
+    auth.getUser();
+    console.log('router running')
+    setTimeout(() => {
+        if (to.meta.requiresAuth && auth.authUser == null) {
+            next({ name: 'Login' })
+        } else if (to.meta.requiresGuest && auth.authUser != null) {
+            next({ name: 'Home' })
+        } else {
+            next();
+        }
+      }, 1800);
+    
 
 })
 

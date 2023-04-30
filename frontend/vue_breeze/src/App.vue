@@ -5,8 +5,14 @@ import Nav from './components/Navbar.vue'
 
 <template>
  <div>
-  <Nav></Nav>
-   <router-view></router-view>
+  <div class="block">
+    <Nav></Nav>
+  </div>
+  
+  <div>
+    <router-view></router-view>
+  </div>
+   
  </div>
 </template>
 

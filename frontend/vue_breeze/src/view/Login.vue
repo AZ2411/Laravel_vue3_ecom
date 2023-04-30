@@ -87,10 +87,18 @@
 import AuthLayout from "../components/AuthLayout.vue";
 import { ref, onMounted } from "vue";
 import { useAuthStore } from "../stores/auth";
+import { useRouter } from "vue-router";
+const router = useRouter();
 const auth = useAuthStore();
 const form = ref({
     email: "",
     password: "",
 });
+onMounted(async () => {
+    if (auth.authUser != null) {
+        router.push('/')
+    }
+});
+
 </script>
 <style scoped></style>
