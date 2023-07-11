@@ -1,0 +1,50 @@
+<template class="relative">
+    <div
+        class="right-0 " id="cart_holder"
+        :class="{ 'fixed cart-top': scroll > 66, 'absolute': scroll < 66}"
+    >
+        <cart/>
+    </div>
+    <div class="flex justify-center bg-gray-100 min-h-screen">
+        <div v-if="store.products_search_error" class="text-center align-middle">
+            <span class="text-2xl">{{ store.products_search_error }}</span>
+        </div>
+        <div
+            v-if="store.products"
+            class="xl:grid xl:grid-cols-3 xl:gap-6 mt-10"
+        >
+            <div v-for="product in store.products" v-if="store.loading">
+                <Product :product="product" />
+            </div>
+        </div>
+        <div v-if="!store.loading">
+            <SkeletonCard />
+        </div>
+    </div>
+</template>
+
+<script setup>
+import { ref, onMounted } from "vue";
+import { initFlowbite } from "flowbite";
+import Product from "./Product.vue";
+import { useUserStore } from "../../stores/user_view";
+import cart from "../../components/user_view/cart.vue";
+import SkeletonCard from "../../components/user_view/SkeletonComponents.vue";
+const store = useUserStore();
+const scroll = ref(0);
+onMounted(async () => {
+    initFlowbite();
+    window.addEventListener("scroll", onScroll);
+});
+function onScroll(e) {
+    scroll.value = window.top.scrollY;
+}
+</script>
+<style scoped>
+.cart-top{
+    top: 80px;
+}
+.cart-animation{
+    transition: top 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+}
+</style>
