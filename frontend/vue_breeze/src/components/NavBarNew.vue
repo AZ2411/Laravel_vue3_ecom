@@ -13,97 +13,98 @@
                     >
                 </h2>
             </div>
-            <div class="flex mx-10 rounded-lg bg-red-400 p-0" >
+            <div class="flex mx-10 rounded-lg bg-red-400 p-0">
                 <router-link
-                    class="mr-2 ml-5 my-2 text-white  hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-red-300 font-medium text-sm px-4 py-2.5 text-center items-center"
-                    to="/" @click="auth.route == 'Landing'"
+                    class="mr-2 ml-5 my-2 text-white hover:bg-red-500 rounded-lg focus:ring-2 focus:outline-none focus:ring-red-300 font-medium text-sm px-4 py-2.5 text-center items-center"
+                    to="/"
+                    @click="auth.route == 'Landing'"
                     >Shopping Page</router-link
                 >
                 <router-link
-                    class="my-2 text-white  hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-red-300 font-medium  text-sm px-4 py-2.5 text-center items-center"
-                    to="/login" v-if="!auth.authUser"
+                    class="my-2 text-white hover:bg-red-500 rounded-lg focus:ring-2 focus:outline-none focus:ring-red-300 font-medium text-sm px-4 py-2.5 text-center items-center"
+                    to="/login"
+                    v-if="!auth.authUser"
                     >Login</router-link
                 >
                 <router-link
-                    class="my-2 text-white  hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-red-300 font-medium  text-sm px-4 py-2.5 text-center items-center"
-                    to="/Register" v-if="!auth.authUser"
+                    class="my-2 text-white hover:bg-red-500 rounded-lg focus:ring-2 focus:outline-none focus:ring-red-300 font-medium text-sm px-4 py-2.5 text-center items-center"
+                    to="/Register"
+                    v-if="!auth.authUser"
                     >Register</router-link
                 >
                 <router-link
-                    class="my-2 text-white  hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-red-300 font-medium  text-sm px-4 py-2.5 text-center items-center"
+                    class="my-2 text-white hover:bg-red-500 rounded-lg focus:ring-2 focus:outline-none focus:ring-red-300 font-medium text-sm px-4 py-2.5 text-center items-center"
                     to="/Register"
                     >Order</router-link
                 >
                 <router-link
-                    class="my-2 text-white  hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-red-300 font-medium  text-sm px-4 py-2.5 text-center items-center"
-                    to="/db"
+                    class="my-2 text-white hover:bg-red-500 rounded-lg focus:ring-2 focus:outline-none focus:ring-red-300 font-medium text-sm px-4 py-2.5 text-center items-center"
+                    to="/db" v-if="auth.authUser"
                     >Go to DB</router-link
                 >
                 <div class="mx-6" v-if="auth.authUser">
-                <button
-                    id="dropdownDefaultButton"
-                    data-dropdown-toggle="dropdown"
-                    class="my-2 text-white  hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-red-300 font-medium text-sm px-4 py-2.5 text-center items-center flex"
-                    type="button"
-                >
-                    User Option
-                    <svg
-                        class="w-4 h-4 ml-2"
-                        aria-hidden="true"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
+                    <button
+                        id="dropdownDefaultButton"
+                        data-dropdown-toggle="dropdown"
+                        class="my-2 text-white rounded-lg hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-red-300 font-medium text-sm px-4 py-2.5 text-center items-center flex"
+                        type="button"
                     >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M19 9l-7 7-7-7"
-                        ></path>
-                    </svg>
-                </button>
-                <!-- Dropdown menu -->
-                <div
-                    id="dropdown"
-                    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
-                >
-                    <ul
-                        class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                        aria-labelledby="dropdownDefaultButton"
+                        User Option
+                        <svg
+                            class="w-4 h-4 ml-2"
+                            aria-hidden="true"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M19 9l-7 7-7-7"
+                            ></path>
+                        </svg>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div
+                        id="dropdown"
+                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
                     >
-                        <li>
-                            <a
-                                href="#"
-                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                >Profile</a
-                            >
-                        </li>
-                        <li>
-                            <a
-                                href="#"
-                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                >Settings</a
-                            >
-                        </li>
-                        <li>
-                            <form
-                                @submit.prevent="auth.handleLogout()"
-                                class=""
-                            >
-                                <button
+                        <ul
+                            class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                            aria-labelledby="dropdownDefaultButton"
+                        >
+                            <li>
+                                <a
+                                    href="#"
                                     class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                    >Profile</a
                                 >
-                                    Sign out
-                                </button>
-                            </form>
-                        </li>
-                    </ul>
+                            </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                    >Settings</a
+                                >
+                            </li>
+                            <li>
+                                <form
+                                    @submit.prevent="auth.handleLogout()"
+                                    class=""
+                                >
+                                    <button
+                                        class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                    >
+                                        Sign out
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-            </div>
-
-            
         </nav>
         <div v-if="!auth.authUser || auth.route == 'Landing'">
             <slot></slot>
@@ -223,7 +224,7 @@
 </template>
 
 <script setup>
-import { ref,onMounted } from "vue";
+import { ref, onMounted } from "vue";
 
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import { initFlowbite } from "flowbite";

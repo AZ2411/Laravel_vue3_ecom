@@ -1,7 +1,7 @@
 <template>
     <div>
         <nav
-            class="bg-red-400 border-gray-200 w-full flex h-20 items-center justify-center z-50"
+            class="bg-red-400 border-gray-200 lg:w-full w-fit flex h-20 items-center justify-center z-50"
             :class="{ 'fixed top-0': scroll > 66 }"
         >
             <!-- logo -->
@@ -15,7 +15,7 @@
             <!-- Search bar -->
             <div>
                 <form
-                    class="flex items-center w-96"
+                    class="flex items-center w-60 lg:w-96"
                     @submit.prevent="store.searchProducts()"
                 >
                     <label for="simple-search" class="sr-only">Search</label>

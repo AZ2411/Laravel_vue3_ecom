@@ -4,6 +4,11 @@
             <input type="hidden" name="remember" value="true" />
             <div class="-space-y-px rounded-md my-5">
                 <div class="my-5">
+                    <div v-if="auth.errors.email" class="mb-3 text-center border-2 border-red-400 rounded-lg border-opacity-25 bg-red-300 bg-opacity-30">
+                        <p class="text-red-600">
+                            Incorrect username or password
+                        </p>
+                    </div>
                     <label for="email-address" class="sr-only"
                         >Email address</label
                     >
@@ -12,14 +17,9 @@
                         type="email"
                         autocomplete="email"
                         v-model="form.email"
-                        class="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        class="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-red-400 sm:text-sm sm:leading-6"
                         placeholder="Email address"
-                    />
-                    <!-- <div v-if="auth.errors.email" class="text-center">
-                        <p class="text-red-500 pt-2">
-                            {{ auth.errors.email[0] }}
-                        </p>
-                    </div> -->
+                    /> 
                 </div>
                 <div class="my-2">
                     <label for="password" class="sr-only">Password</label>
@@ -28,15 +28,10 @@
                         type="password"
                         autocomplete="current-password"
                         v-model="form.password"
-                        class="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        class="relative block w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-red-400 sm:text-sm sm:leading-6"
                         placeholder="Password"
                     />
                 </div>
-                <!-- <div v-if="auth.errors.password" class="text-center">
-                    <p class="text-red-500 pt-2">
-                        {{ auth.errors.password[0] }}
-                    </p>
-                </div> -->
             </div>
 
             <div class="h-5 flex items-center justify-between mb-4"  >
@@ -47,7 +42,7 @@
                         value="1"
                         v-model="form.remember"
                         type="checkbox"
-                        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                        class="h-4 w-4 rounded border-gray-300 text-red-400 focus:ring-indigo-600"
                     />
                     <label
                         for="remember-me"
@@ -58,7 +53,7 @@
 
                 <div class="text-sm my-5">
                     <router-link
-                        class="font-medium text-indigo-600 hover:text-indigo-500"
+                        class="font-medium text-red-400 hover:text-indigo-500"
                         to="/forgot-password"
                         >Forgot your password?</router-link
                     >
@@ -68,7 +63,7 @@
             <div>
                 <button
                     type="submit"
-                    class="group relative flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    class="group relative flex w-full justify-center rounded-md bg-red-400 px-3 py-2 text-sm font-semibold text-white hover:bg-red-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
                     <span
                         class="absolute inset-y-0 left-0 flex items-center pl-3"
@@ -90,6 +85,7 @@ import AuthLayout from "../components/AuthLayout.vue";
 import { ref, onMounted } from "vue";
 import { useAuthStore } from "../stores/auth";
 import { useRouter } from "vue-router";
+import axios from "axios";
 const router = useRouter();
 const auth = useAuthStore();
 const form = ref({
@@ -97,11 +93,12 @@ const form = ref({
     password: "",
     remember: null
 });
-onMounted(async () => {
-    if (auth.authUser != null) {
-        router.push('/')
-    }
-});
-
+// const handleLogin = async () => {
+//     auth.getToken();
+//     await axios.post('/login', {
+//         email: form.value.email,
+//         password: form.value.password
+//     });
+// }
 </script>
 <style scoped></style>

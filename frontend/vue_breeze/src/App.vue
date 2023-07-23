@@ -14,6 +14,7 @@
             
         </div>
     </div> -->
+    <ProductDetailModal class="detail-modal" />
     <div class="overflow-ellipsis">
       <NavBarNew><router-view></router-view></NavBarNew>
     </div>
@@ -26,9 +27,13 @@ import NavBarNew from "./components/NavBarNew.vue"
 import { useRoute } from 'vue-router';
 import { useAuthStore } from "./stores/auth.js";
 import { initFlowbite } from "flowbite";
+import ProductDetailModal from "./components/user_view/ProductDetailModal.vue";
 const auth = useAuthStore();
 const route = useRoute()
 onMounted(async () => {
   initFlowbite();
 });
 </script>
+<style scoped>
+
+</style>

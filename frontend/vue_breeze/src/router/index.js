@@ -71,6 +71,8 @@ const router = createRouter({
 })
 router.beforeEach((to, from, next) => {
     const auth = useAuthStore();
+    auth.getToken();
+    auth.getUser();
     if (auth.route == 'Landing') {
         auth.route = ''
     }

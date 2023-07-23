@@ -8,6 +8,7 @@ export const useAuthStore = defineStore("auth", {
         authStatus: null,
         loadingTime: null,
         loadingStatus: false,
+        Register_auth_error: null,
         route: "Landing",
     }),
     getters: {
@@ -45,19 +46,18 @@ export const useAuthStore = defineStore("auth", {
             await this.getToken();
             try {
                 console.log(data);
-                await axios.post("/api/login", {
+                await axios.post('/login', {
                     email: data.email,
                     password: data.password,
-                    remember: data.remember
+                    remember: data.remember 
                 });
                 await this.getUser();
                 this.router.push("/");
             } catch (error) {
                 if (error.response?.status === 422) {
                     this.authErrors = error.response.data.errors;
-                    console.log(error.response.data.errors);
+                    console.log(error.response.data);
                 }
-                
             }
         },
         async handleRegister(data) {
@@ -72,9 +72,8 @@ export const useAuthStore = defineStore("auth", {
                 });
                 this.router.push("/");
             } catch (error) {
-                if (error.response.status === 422) {
-                    this.authErrors = error.response.data.errors;
-                }
+                this.Register_auth_error = error.response.data.errors
+                console.log(this.Register_auth_error);
             }
         },
         async handleLogout() {

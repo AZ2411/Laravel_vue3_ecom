@@ -1,37 +1,38 @@
 <template>
     <div
-        v-if="store.cartBtnStatus"
-        style=""
-        class="z-50 bg-gray-300 divide-y divide-gray-100 rounded-lg shadow cart overflow-y-scroll h-auto max-h-screen"
+        style="width: 400px"
+        class="bg-gray-300 divide-y divide-gray-100 rounded-lg shadow"
+        :class="{ 'fixed position_top': scroll > 66, absolute: scroll < 66 }"
     >
-        <div class="relative overflow-x-auto m-3 bg-gray-300">
-            <table
-                class="w-full text-sm text-left text-gray-500 "
-            >
-                <thead
-                    class="text-xs text-gray-700 uppercase"
-                >
+        <div
+            class="relative bg-gray-300 "
+            :class="{
+                'table_heigh2': scroll > 66,
+                'table_heigh1': scroll < 66,
+            }"
+        >
+            <table class="w-fit text-sm text-left text-gray-500">
+                <thead class="text-xs text-gray-700 uppercase">
                     <tr>
-                        <th scope="col" class="px-6 py-3">Product name</th>
-
-                        <th scope="col" class="px-6 py-3">Qty</th>
-                        <th scope="col" class="px-6 py-3">Price</th>
-                        <th scope="col" class="px-6 py-3"></th>
+                        <th scope="col" class="px-3 py-1">Product name</th>
+                        <th scope="col" class="px-3 py-1">Qty</th>
+                        <th scope="col" class="px-3 py-1">Price</th>
+                        <th scope="col" class="px-3 py-1"></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="">
                     <tr
-                        class=" border-b dark:bg-gray-800 dark:border-gray-700"
+                        class="border-b dark:bg-gray-800 dark:border-gray-700 h-14"
                         v-for="item in store.cartItem"
                     >
                         <th
                             scope="row"
-                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                            class="px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                         >
                             {{ item.brand }} {{ item.name }}
                         </th>
 
-                        <td class="px-6 py-4">
+                        <td class="px-6">
                             <input
                                 type="number"
                                 :value="item.qty"
@@ -39,10 +40,10 @@
                                 min="1"
                             />
                         </td>
-                        <td class="px-6 py-4">${{ item.price }}</td>
+                        <td class="px-6">${{ item.price }}</td>
                         <td>
-                            <button 
-                            @click="store.deleteProductFromCart(item.id)"
+                            <button
+                                @click="store.deleteProductFromCart(item.id)"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -61,24 +62,20 @@
                             </button>
                         </td>
                     </tr>
-
-                    <tr class="bg-white dark:bg-gray-800">
-                        <td colspan="2"></td>
-                    </tr>
                 </tbody>
             </table>
-            <div class="flex justify-between w-full">
-                <div>
-                    <button
-                        class="mr-2 ml-5 my-2 text-white bg-red-400 rounded-lg hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-red-300 font-medium text-sm px-4 py-2.5 text-center items-center"
-                    >
-                        Proceed To Checkout
-                    </button>
-                </div>
-                <div class="flex">
-                    <p class="px-6 py-4">Total</p>
-                    <p class="px-6 py-4">${{ store.TotalCost }}</p>
-                </div>
+        </div>
+        <div class="flex justify-between w-auto">
+            <div>
+                <button
+                    class="mr-2 ml-5 my-2 text-white bg-red-400 rounded-lg hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-red-300 font-medium text-sm px-4 py-2.5 text-center items-center"
+                >
+                    Proceed To Checkout
+                </button>
+            </div>
+            <div class="flex">
+                <p class="px-6 py-2">Total</p>
+                <p class="px-6 py-2">${{ store.TotalCost }}</p>
             </div>
         </div>
     </div>
@@ -103,7 +100,15 @@ function onScroll(e) {
 .input_number::-webkit-outer-spin-button {
     opacity: 1;
 }
-.cart {
-    width: 600px;
+.position_top {
+    top: 80px;
+}
+.table_heigh1 {
+    height: 578px;
+    overflow-y: auto;
+}
+.table_heigh2 {
+    height: 650px;
+    overflow-y: auto;
 }
 </style>

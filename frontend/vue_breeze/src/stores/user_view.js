@@ -9,7 +9,9 @@ export const useUserStore = defineStore("user_view", {
         loading: true,
         cartBtnStatus: false,
         searchKeyProducts: null,
-        products_search_error: null
+        products_search_error: null,
+        products_detail_status: false,
+        detail_product: null
         // cartItem_leng: null
     }),
     getters: {

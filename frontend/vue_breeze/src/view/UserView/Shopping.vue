@@ -1,24 +1,35 @@
 <template class="relative">
-    <div
+    <!-- <div
         class="right-0 " id="cart_holder"
         :class="{ 'fixed cart-top': scroll > 66, 'absolute': scroll < 66}"
     >
         <cart/>
-    </div>
-    <div class="flex justify-center bg-gray-100 min-h-screen">
-        <div v-if="store.products_search_error" class="text-center align-middle">
-            <span class="text-2xl">{{ store.products_search_error }}</span>
-        </div>
-        <div
-            v-if="store.products"
-            class="xl:grid xl:grid-cols-3 xl:gap-6 mt-10"
-        >
-            <div v-for="product in store.products" v-if="store.loading">
-                <Product :product="product" />
+    </div> -->
+    
+    <div class="flex justify-center lg:justify-around bg-gray-100 ">
+        
+        <div class="flex justify-center min-h-screen w-full" :class="{ 'lg:w-auto mx-5': store.cartBtnStatus, 'lg:w-screen ': !store.cartBtnStatus}">
+            <div
+                v-if="store.products_search_error"
+                class="text-center align-middle"
+            >
+                <span class="text-2xl">{{ store.products_search_error }}</span>
+            </div>
+            <div
+                v-if="store.products"
+                class="xl:grid xl:grid-cols-3 xl:gap-6 mt-10"
+            >
+                <div v-for="product in store.products" v-if="store.loading">
+                    <Product :product="product" />
+                </div>
+            </div>
+            <div v-if="!store.loading">
+                <SkeletonCard />
             </div>
         </div>
-        <div v-if="!store.loading">
-            <SkeletonCard />
+        <div class="cart-holder" :class=" {'hidden' : !store.cartBtnStatus}">
+            <cart/>
+            
         </div>
     </div>
 </template>
@@ -41,10 +52,13 @@ function onScroll(e) {
 }
 </script>
 <style scoped>
-.cart-top{
+.cart-top {
     top: 80px;
 }
-.cart-animation{
+.cart-holder{
+    width: 400px;
+}
+.cart-animation {
     transition: top 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
 }
 </style>
