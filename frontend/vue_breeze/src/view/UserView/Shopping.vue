@@ -39,7 +39,7 @@ import { ref, onMounted } from "vue";
 import { initFlowbite } from "flowbite";
 import Product from "./Product.vue";
 import { useUserStore } from "../../stores/user_view";
-import cart from "../../components/user_view/cart.vue";
+import cart from "../../components/user_view/Cart.vue";
 import SkeletonCard from "../../components/user_view/SkeletonComponents.vue";
 const store = useUserStore();
 const scroll = ref(0);

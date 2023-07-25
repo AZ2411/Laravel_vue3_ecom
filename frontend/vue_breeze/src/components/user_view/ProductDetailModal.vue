@@ -100,6 +100,7 @@
                                 class="flex flex-row h-10 w-full rounded-lg relative bg-transparent"
                             >
                                 <button
+                                    @click="qty--"
                                     data-action="decrement"
                                     class="bg-red-400 text-black hover:text-white hover:bg-red-500 h-full w-20 rounded-l cursor-pointer outline-none border-r-2"
                                 >
@@ -110,11 +111,11 @@
                                 <input
                                     type="number"
                                     class="focus:outline-none text-center w-full bg-red-400 font-semibold text-md hover:text-black focus:text-black flex items-center text-gray-700 outline-none border-0 focus:border-0 focus:ring-0"
-                                    name="custom-input-number"
-                                    min="1"
-                                    value="1"
+                                    min=1
+                                    v-model="qty"
                                 />
                                 <button
+                                    @click="qty++"
                                     data-action="increment"
                                     class="bg-red-400 text-black hover:text-white hover:bg-red-500 h-full w-20 rounded-r cursor-pointer outline-none border-l-2"
                                 >
@@ -126,9 +127,15 @@
                         </div>
 
                         <button
+                            @click="addToCart(
+                                store.detail_product.id,
+                                store.detail_product.name,
+                                store.detail_product.brand,
+                                store.detail_product.price
+                            )"
                             class="py-2 px-4 h-10 bg-red-400 text-white rounded hover:bg-red-500 active:bg-red-600 disabled:opacity-50 w-full flex items-center justify-center"
                         >
-                            Add to order
+                            Add to Cart
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 class="h-6 w-6 ml-2"
@@ -152,18 +159,32 @@
 </template>
 <script setup>
 import { useUserStore } from "../../stores/user_view";
-import { onMounted, onUpdated, onUnmounted } from "vue";
+import { ref,onMounted, onUpdated, onUnmounted } from "vue";
+
 
 const store = useUserStore();
-
+const qty = ref(1);
 const closeModal = () => {
     store.products_detail_status = false;
     store.detail_product = null;
 };
+function addToCart(id, name, brand, price) {
+    let item = {
+        id: id,
+        name: name,
+        brand: brand,
+        qty: qty.value,
+        price: +price,
+    };
+    store.addToCart(item);
+}
+onUnmounted(() => {
+    console.log('this is unmounted');
+});
 </script>
 <style scoped>
 .detail-modal {
-    top: 25%;
+    top: 15%;
     justify-content: center;
 }
 input[type="number"]::-webkit-inner-spin-button,

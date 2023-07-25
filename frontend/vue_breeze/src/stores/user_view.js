@@ -48,7 +48,7 @@ export const useUserStore = defineStore("user_view", {
                 this.cartItem = JSON.parse(localStorage.getItem("item"));
                 for (let index = 0; index < this.cartItem.length; index++) {
                     if (this.cartItem[index].id == item.id) {
-                        this.cartItem[index].qty += 1;
+                        this.cartItem[index].qty += item.qty;
 
                         localStorage.setItem(
                             "item",
@@ -66,7 +66,9 @@ export const useUserStore = defineStore("user_view", {
                 this.cartItem.push(item);
                 localStorage.setItem("item", JSON.stringify(this.cartItem));
             }
-            this.TotalCost = item.price + this.TotalCost;
+            this.TotalCost = (item.price * item.qty) + this.TotalCost;
+            this.products_detail_status = false
+            this.detail_product = null
             // this.cartItem_leng = this.cartItem.length
         },
         deleteProductFromCart(id) {

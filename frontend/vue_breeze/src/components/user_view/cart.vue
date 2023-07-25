@@ -17,7 +17,7 @@
                         <th scope="col" class="px-3 py-1">Product name</th>
                         <th scope="col" class="px-3 py-1">Qty</th>
                         <th scope="col" class="px-3 py-1">Price</th>
-                        <th scope="col" class="px-3 py-1"></th>
+                        <th scope="col" class="px-3 py-1">Cancel</th>
                     </tr>
                 </thead>
                 <tbody class="">
