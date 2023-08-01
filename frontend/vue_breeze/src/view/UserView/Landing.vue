@@ -1,11 +1,11 @@
 <template>
     <div>
         <nav
-            class="bg-red-400 border-gray-200 lg:w-full w-fit flex h-20 items-center justify-center z-50"
+            class="bg-red-400 border-gray-200 lg:w-full flex h-20 items-center justify-center z-50 w-screen"
             :class="{ 'fixed top-0': scroll > 66 }"
         >
             <!-- logo -->
-            <div>
+            <div class="hidden lg:flex">
                 <img
                     src="http://localhost:8000/it_flash.png"
                     alt="image not found"

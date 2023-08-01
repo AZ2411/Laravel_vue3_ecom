@@ -5,7 +5,7 @@
             class="fixed z-50 detail-modal"
         >
             <div
-                class="w-auto bg-white rounded-lg flex shadow-xl"
+                class="w-auto bg-white rounded-lg md:flex shadow-xl"
                 v-if="store.detail_product"
             >
                 <div class="p-5">

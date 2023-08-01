@@ -1,8 +1,6 @@
 <template>
     <div class="">
-        <h2>This is Home Page</h2>
-        <h3>Hello World</h3>
-        <img src="http://localhost:8000/images/products/1/product1.jpg" alt="image not found">
+        <h2 style="font-size: 40px;" class="text-red-500">This is Home Page</h2>
         <div v-if="!authStore.authUser">
             <p>Loading</p>
         </div>

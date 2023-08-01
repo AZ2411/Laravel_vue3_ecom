@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -50,52 +51,59 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make(request()->all(), [
             'name' => 'required|unique:products',
             'description' => 'required',
             'brand' => 'required',
             'qty' => 'required',
             'price' => 'required',
-            'profile' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            'profile' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
-        if ($request->qty > 0) {
-            $status = 'Instock';
-        } else {
-            $status = 'Outstock';
+        
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ]);
         }
-        $tfmessage = 'file is false';
-        $product = new Product;
-        $product->brand = $request->brand;
-        $product->name = $request->name;
-        $product->description = $request->description;
-        $product->price = $request->price;
-        $product->qty = $request->qty;
-        $product->status = $status;
-        $product->created_by = $request->user;
-        $product->save();
-        if ($request->hasFile("profile")) {
-            $tfmessage = 'file is true';
-            $file = $request->file("profile");
-            $path = public_path("images/products/" . $product->id);
-            $fileName = "product" . $product->id . "." . $file->getClientOriginalExtension();
-            if (File::exists($path)) {
-                File::deleteDirectory($path);
+        
+        
+            if ($request->qty > 0) {
+                $status = 'Instock';
+            } else {
+                $status = 'Outstock';
             }
-            File::makeDirectory($path);
-            $file->move($path, $fileName);
-            $product->profile = $fileName;
+            $product = new Product;
+            $product->brand = $request->brand;
+            $product->name = $request->name;
+            $product->description = $request->description;
+            $product->price = $request->price;
+            $product->qty = $request->qty;
+            $product->status = $status;
+            $product->created_by = $request->user;
             $product->save();
-
-        }
-
-
-        $product->categories()->attach($request->categories);
-        return new ProductResource($product);
+            if ($request->hasFile("profile")) {
+                $tfmessage = 'file is true';
+                $file = $request->file("profile");
+                $path = public_path("images/products/" . $product->id);
+                $fileName = "product" . $product->id . "." . $file->getClientOriginalExtension();
+                if (File::exists($path)) {
+                    File::deleteDirectory($path);
+                }
+                File::makeDirectory($path);
+                $file->move($path, $fileName);
+                $product->profile = $fileName;
+                $product->save();
+    
+            }
+            $product->categories()->attach($request->categories);
+            return new ProductResource($product);
+       
+        
+        
         // return response()->json([
-        //     'message' => "ok",
-        //     'tfmessage' => $tfmessage,
-        //     'success' => 'file is successful'
-        // ]);
+        //     'data' => [],
+        //     'status' => Response::HTTP_CREATED,
+        // ], Response::HTTP_CREATED);
     }
 
     /**

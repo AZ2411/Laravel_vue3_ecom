@@ -21,7 +21,6 @@
 </template>
 <script setup>
 import { ref,onMounted } from "vue";
-import Nav from "./components/Navbar.vue";
 import sideBar from "./components/SideBar.vue"
 import NavBarNew from "./components/NavBarNew.vue"
 import { useRoute } from 'vue-router';

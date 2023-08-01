@@ -1,7 +1,7 @@
 <template>
     <div>
         <nav
-            class="bg-zinc-100 border-gray-200 z-20 top-0 left-0 flex h-16 items-center justify-between"
+            class="bg-zinc-100 border-gray-200 z-20 top-0 left-0 hidden h-16 items-center justify-between lg:flex"
         >
             <div class="ml-8 flex">
                 <h2 class="lg:text-4xl text-lg text-red-500" id="header_h2">

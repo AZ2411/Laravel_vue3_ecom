@@ -1,11 +1,11 @@
 <template>
     <div
         style="width: 400px"
-        class="bg-gray-300 divide-y divide-gray-100 rounded-lg shadow"
+        class="bg-gray-300 max-h-screen h-screen rounded-lg shadow"
         :class="{ 'fixed position_top': scroll > 66, absolute: scroll < 66 }"
     >
         <div
-            class="relative bg-gray-300 "
+            class="relative bg-gray-300 overflow-y-scroll"
             :class="{
                 'table_heigh2': scroll > 66,
                 'table_heigh1': scroll < 66,
@@ -17,7 +17,7 @@
                         <th scope="col" class="px-3 py-1">Product name</th>
                         <th scope="col" class="px-3 py-1">Qty</th>
                         <th scope="col" class="px-3 py-1">Price</th>
-                        <th scope="col" class="px-3 py-1">Cancel</th>
+                        
                     </tr>
                 </thead>
                 <tbody class="">
@@ -25,23 +25,12 @@
                         class="border-b dark:bg-gray-800 dark:border-gray-700 h-14"
                         v-for="item in store.cartItem"
                     >
-                        <th
+                        <td
+                            style="width: 200px"
                             scope="row"
-                            class="px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                            class="px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white flex justify-between"
                         >
                             {{ item.brand }} {{ item.name }}
-                        </th>
-
-                        <td class="px-6">
-                            <input
-                                type="number"
-                                :value="item.qty"
-                                class="border-0 p-0 m-0 w-10 focus:ring-0 input_number bg-transparent"
-                                min="1"
-                            />
-                        </td>
-                        <td class="px-6">${{ item.price }}</td>
-                        <td>
                             <button
                                 @click="store.deleteProductFromCart(item.id)"
                             >
@@ -61,6 +50,17 @@
                                 </svg>
                             </button>
                         </td>
+
+                        <td class="px-6">
+                            <input
+                                type="number"
+                                :value="item.qty"
+                                class="border-0 p-0 m-0 w-10 focus:ring-0 input_number bg-transparent"
+                                min="1"
+                            />
+                        </td>
+                        <td class="px-6">${{ item.price }}</td>
+                        
                     </tr>
                 </tbody>
             </table>
@@ -104,11 +104,9 @@ function onScroll(e) {
     top: 80px;
 }
 .table_heigh1 {
-    height: 578px;
-    overflow-y: auto;
+    height: 560px;
 }
 .table_heigh2 {
-    height: 650px;
-    overflow-y: auto;
+    height: 600px;
 }
 </style>

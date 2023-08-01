@@ -1,6 +1,6 @@
 <template>
     <div
-        class="z-0 max-w-sm mb-5 rounded-2xl overflow-hidden shadow-lg h-80 bg-white main_box"
+        class="main-hoder z-0 max-w-sm mb-5 lg:rounded-2xl overflow-hidden shadow-lg bg-white h-80 main_box"
         v-if="props"
     >
         <div class="box">
@@ -28,9 +28,9 @@
                 </div>
 
                 <div>
-                     <button
-                     @click="openDetailmodal(props.product)"
-                        class="lg:mr-2 text-white bg-red-400 hover:bg-red-500 focus:ring-2 focus:outline-none font-medium rounded-lg text-sm px-4 py-2.5 text-center"
+                    <button
+                        @click="openDetailmodal(props.product)"
+                        class="lg:mr-2 mr-1 text-white bg-red-400 hover:bg-red-500 focus:ring-2 focus:outline-none font-medium rounded-lg lg:text-sm text-xs lg:px-4 px-2 py-2.5 text-center"
                     >
                         Details
                     </button>
@@ -43,7 +43,7 @@
                                 props.product.price
                             )
                         "
-                        class="text-white bg-red-400 hover:bg-red-500 focus:ring-2 focus:outline-none font-medium rounded-lg text-sm px-4 py-2.5 text-center"
+                        class="text-white bg-red-400 hover:bg-red-500 focus:ring-2 focus:outline-none font-medium rounded-lg lg:text-sm text-xs lg:px-4 px-2 py-2.5 text-center"
                     >
                         Add
                     </button>
@@ -51,12 +51,10 @@
             </div>
         </div>
     </div>
-    
 </template>
 
 <script setup>
 import { useUserStore } from "../../stores/user_view";
-
 
 const store = useUserStore();
 
@@ -74,10 +72,8 @@ function addToCart(id, name, brand, price) {
 }
 const openDetailmodal = (product) => {
     store.products_detail_status = true;
-    store.detail_product = product
-    console.log("🚀 ~ file: Product.vue:78 ~ openDetailmodal ~ product:", product)  
-}
-
+    store.detail_product = product;
+};
 </script>
 <style scoped>
 .box {
@@ -94,5 +90,10 @@ const openDetailmodal = (product) => {
 }
 .main_box:hover img {
     transform: scale(1.1);
+}
+@media only screen and (max-width: 426px) {
+    .main-hoder{
+        width: 100vw;
+    }
 }
 </style>

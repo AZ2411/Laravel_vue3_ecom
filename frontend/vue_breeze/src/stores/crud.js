@@ -46,7 +46,7 @@ export const usecrudStore = defineStore("crud", {
         async handleAddCategory(data) {
             await this.getToken();
             try {
-                await axios.post("/api/categories_create", {
+                await axios.post("/api/categories", {
                     category: data.name,
                 });
                 await this.getCategories();

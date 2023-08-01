@@ -17,7 +17,7 @@
             </div>
             <div
                 v-if="store.products"
-                class="xl:grid xl:grid-cols-3 xl:gap-6 mt-10"
+                class="md:grid md:grid-cols-2 md:gap-3 lg:gap-6 lg:grid-cols-3 mt-10"
             >
                 <div v-for="product in store.products" v-if="store.loading">
                     <Product :product="product" />
@@ -27,8 +27,10 @@
                 <SkeletonCard />
             </div>
         </div>
-        <div class="cart-holder" :class=" {'hidden' : !store.cartBtnStatus}">
+        <div class="" :class=" {'hidden' : !store.cartBtnStatus}">
+         <div class="hidden lg:flex cart-holder">
             <cart/>
+         </div>
             
         </div>
     </div>
@@ -39,7 +41,7 @@ import { ref, onMounted } from "vue";
 import { initFlowbite } from "flowbite";
 import Product from "./Product.vue";
 import { useUserStore } from "../../stores/user_view";
-import cart from "../../components/user_view/Cart.vue";
+import cart from "../../components/user_view/cart.vue";
 import SkeletonCard from "../../components/user_view/SkeletonComponents.vue";
 const store = useUserStore();
 const scroll = ref(0);
