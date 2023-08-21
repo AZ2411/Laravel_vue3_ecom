@@ -1,5 +1,10 @@
 <template>
-    <div class="relative w-screen flex">
+    <div
+        class="relative w-screen flex"
+        data-modal-backdrop="static"
+        tabindex="-1"
+        aria-hidden="true"
+    >
         <div
             v-if="store.products_detail_status"
             class="fixed z-50 detail-modal"
@@ -21,7 +26,7 @@
                         alt="Mountain"
                     />
                 </div>
-                <div class="p-4 flex flex-col h-full ">
+                <div class="p-4 flex flex-col h-full">
                     <div
                         class="flex items-start justify-between rounded-t dark:border-gray-600"
                     >
@@ -83,8 +88,12 @@
                             </h3>
                         </div>
                         <div>
-                            <label for="" class="flex justify-center">Description</label>
-                            <p class="lg:w-72 border-2 rounded-lg p-2 mb-5 border-red-400">
+                            <label for="" class="flex justify-center"
+                                >Description</label
+                            >
+                            <p
+                                class="lg:w-72 border-2 rounded-lg p-2 mb-5 border-red-400"
+                            >
                                 Lorem ipsum dolor sit amet consectetur
                                 adipisicing elit. Ullam tenetur, quo veritatis
                                 at explicabo consectetur, fugit magnam debitis
@@ -111,7 +120,7 @@
                                 <input
                                     type="number"
                                     class="focus:outline-none text-center w-full bg-red-400 font-semibold text-md hover:text-black focus:text-black flex items-center text-gray-700 outline-none border-0 focus:border-0 focus:ring-0"
-                                    min=1
+                                    min="1"
                                     v-model="qty"
                                 />
                                 <button
@@ -127,12 +136,14 @@
                         </div>
 
                         <button
-                            @click="addToCart(
-                                store.detail_product.id,
-                                store.detail_product.name,
-                                store.detail_product.brand,
-                                store.detail_product.price
-                            )"
+                            @click="
+                                addToCart(
+                                    store.detail_product.id,
+                                    store.detail_product.name,
+                                    store.detail_product.brand,
+                                    store.detail_product.price
+                                )
+                            "
                             class="py-2 px-4 h-10 bg-red-400 text-white rounded hover:bg-red-500 active:bg-red-600 disabled:opacity-50 w-full flex items-center justify-center"
                         >
                             Add to Cart
@@ -159,8 +170,7 @@
 </template>
 <script setup>
 import { useUserStore } from "../../stores/user_view";
-import { ref,onMounted, onUpdated, onUnmounted } from "vue";
-
+import { ref, onMounted, onUpdated, onUnmounted } from "vue";
 
 const store = useUserStore();
 const qty = ref(1);
@@ -179,7 +189,7 @@ function addToCart(id, name, brand, price) {
     store.addToCart(item);
 }
 onUnmounted(() => {
-    console.log('this is unmounted');
+    console.log("this is unmounted");
 });
 </script>
 <style scoped>

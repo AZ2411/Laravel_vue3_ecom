@@ -1,18 +1,18 @@
 <template>
     <div
         style="width: 400px"
-        class="bg-gray-300 max-h-screen h-screen rounded-lg shadow"
+        class="bg-gray-100 max-h-screen h-screen rounded-lg shadow"
         :class="{ 'fixed position_top': scroll > 66, absolute: scroll < 66 }"
     >
         <div
-            class="relative bg-gray-300 overflow-y-scroll"
+            class="relative bg-red-400 overflow-y-scroll"
             :class="{
                 'table_heigh2': scroll > 66,
                 'table_heigh1': scroll < 66,
             }"
         >
-            <table class="w-fit text-sm text-left text-gray-500">
-                <thead class="text-xs text-gray-700 uppercase">
+            <table class="w-fit text-sm text-left text-gray-200">
+                <thead class="text-xs uppercase">
                     <tr>
                         <th scope="col" class="px-3 py-1">Product name</th>
                         <th scope="col" class="px-3 py-1">Qty</th>
@@ -28,7 +28,7 @@
                         <td
                             style="width: 200px"
                             scope="row"
-                            class="px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white flex justify-between"
+                            class="px-6 font-medium whitespace-nowrap dark:text-white flex justify-between"
                         >
                             {{ item.brand }} {{ item.name }}
                             <button

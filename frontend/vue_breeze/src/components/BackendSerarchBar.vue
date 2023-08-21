@@ -10,14 +10,14 @@
                 v-model="name"
                 type="text"
                 id="simple-search"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                class="bg-gray-50 border border-red-300 text-red-900 text-sm rounded-lg focus:ring-red-400 focus:border-red-400 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Search"
                 required
             />
         </div>
         <button
             type="submit"
-            class="p-2.5 ml-2 text-sm font-medium text-white bg-cyan-400 rounded-lg border border-cyan-400 hover:bg-cyan-600 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            class="p-2.5 ml-2 text-sm font-medium text-white bg-red-400 rounded-lg border border-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-blue-600"
         >
             <svg
                 class="w-5 h-5"
@@ -33,7 +33,7 @@
                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                 ></path>
             </svg>
-            <span class="sr-only">Search</span>
+            <span class="sr-only text-red-300">Search</span>
         </button>
     </form>
 </template>
@@ -58,4 +58,8 @@ watch(name, () => {
     }
 });
 </script>
-<style lang=""></style>
+<style scoped>
+::-webkit-input-placeholder{
+    color: rgb(204, 27, 27);
+}
+</style>

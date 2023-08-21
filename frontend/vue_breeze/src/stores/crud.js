@@ -18,11 +18,17 @@ export const usecrudStore = defineStore("crud", {
         product_number: null,
         products_for_pagination: null,
         productsFilterStatus: false,
-        searchKeyProducts: null
+        searchKeyProducts: null,
+        product_create_modal_status: false,
+        product_img_update: null,
+        product_update_form: null,
+        form_cate_id: []
+
     }),
     getters: {
         
         products: (state) => state.filterProducts,
+        products_show_photo_url: (state) => "http://localhost:8000/images/products/" + state.product_update_form?.id + "/" + state.product_update_form?.profile
     },
     actions: {
         async getToken() {
@@ -64,10 +70,44 @@ export const usecrudStore = defineStore("crud", {
         },
         async updateCategory(id, data) {
             await this.getToken();
-            await axios.post(`/api/category_update/${id}`, {
+            await axios.put(`/api/categories/${id}`, {
                 category: data,
             });
             this.router.push("/category");
+        },
+        async updateProduct(form, id) {
+            await this.getToken();
+            this.form_cate_id = [];
+            form.categories.forEach(cate => {
+                this.form_cate_id.push(parseInt(cate.id))
+            });
+            try {
+                const config = {
+                    headers: {
+                        "content-type": "multipart/form-data",
+                    },
+                };
+                    const data = await axios.post(`api/products_update/${id}`,
+                        {
+                            name : form.name,
+                            brand : form.brand,
+                            description: form.description,
+                            profile: form.profile,
+                            price: form.price,
+                            qty: form.qty,
+                            categories: this.form_cate_id,
+                        },
+                        config);
+                        console.log(data);
+                        if (data.data.errors) {
+                            console.log(data.data?.errors);
+                        }else{
+                            await this.getProducts();
+                        }
+                    
+            } catch (error) {
+                this.error_pulling = "something was wrong";
+            }
         },
         async getProducts(page = 1) {
             
@@ -82,15 +122,15 @@ export const usecrudStore = defineStore("crud", {
         },
         async createProduct(form) {
             await this.getToken();
+            console.log(form);
             try {
                 const config = {
                     headers: {
                         "content-type": "multipart/form-data",
                     },
                 };
-                await axios
-                    .post(
-                        "/api/products",
+
+                    const data = await axios.post("/api/products",
                         {
                             name: form.name,
                             brand: form.brand,
@@ -101,15 +141,14 @@ export const usecrudStore = defineStore("crud", {
                             user: form.user.id,
                             categories: form.categories,
                         },
-                        config
-                    )
-                    .catch(function (error) {
-                        if (error.response) {
-                            let product_form_errors =
-                                error.response.data.errors;
+                        config);
+                        if (data.data.errors) {
+                            this.product_form_errors = data.data.errors;
+                            console.log(this.product_form_errors);
+                        }else{
+                            await this.getProducts();
                         }
-                    });
-                await this.getProducts();
+                    
             } catch (error) {
                 this.error_pulling = "something was wrong";
             }

@@ -20,8 +20,8 @@
 
                 <div></div>
                 <div class="flex justify-end">
-                    <div style="height: 40px; width: 61px;" class="rounded-full py-2 px-4 mr-2  btn skeleton"></div>
-                    <div style="height: 40px; width: 72px;" class=" rounded-full py-2 px-4 mr-2 btn skeleton"></div>
+                    
+                    <div style="height: 40px; width: 120px;" class=" rounded-full py-2 px-4 mr-2 btn skeleton"></div>
                     <div style="height: 40px; width: 80px;" class=" rounded-full py-2 px-4 btn skeleton"></div>
                     
                     

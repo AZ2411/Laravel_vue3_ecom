@@ -2,16 +2,16 @@
     <div class="w-full h-full">
         <div class="flex justify-between">
             <button
-                data-modal-target="authentication-modal"
-                data-modal-toggle="authentication-modal"
-                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full my-3 inline"
+                data-modal-target="ProductCreateModal"
+                data-modal-toggle="ProductCreateModal"
                 type="button"
+                class="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-full my-3 inline"
             >
                 Create
             </button>
             <QuickSearchProducts></QuickSearchProducts>
             <button
-                class="bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full my-3 flex"
+                class="bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-full my-3 flex"
                 type="button"
                 @click="status = !status"
             >
@@ -162,16 +162,16 @@
 
                         <div></div>
                         <div class="flex justify-end">
-                            <a
-                                href="#"
-                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                                >Edit</a
-                            >
-                            <a
+                            <button
+                                @click="ProductShowFunction(product)"
+                                type="button"
+                                data-modal-target="ProductShowModal"
+                                data-modal-toggle="ProductShowModal"
                                 href="#"
                                 class="bg-yellow-300 hover:bg-yellow-400 text-gray-700 font-bold py-2 px-4 rounded-full ml-1"
-                                >Show</a
                             >
+                                Show & Edit
+                            </button>
                             <a
                                 @click="store.deleteProduct(product.id)"
                                 class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full ml-1"
@@ -211,7 +211,8 @@
         </div>
         <!--Create Modal content -->
         <div
-            id="authentication-modal"
+            id="ProductCreateModal"
+            data-modal-backdrop="static"
             tabindex="-1"
             aria-hidden="true"
             class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full"
@@ -224,7 +225,7 @@
                         type="button"
                         id="createModalCloseBtn"
                         class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                        data-modal-hide="authentication-modal"
+                        data-modal-hide="ProductCreateModal"
                     >
                         <svg
                             aria-hidden="true"
@@ -282,6 +283,22 @@
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                         required
                                     />
+                                    <div
+                                        v-if="store?.product_form_errors"
+                                        class="my-3 text-center border-2 border-red-400 rounded-lg border-opacity-25 bg-red-300 bg-opacity-30"
+                                    >
+                                        <p class="text-red-600">
+                                            {{
+                                                store.product_form_errors
+                                                    .name[0]
+                                            }}
+                                        </p>
+                                        <button
+                                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full my-3 inline"
+                                        >
+                                            Increase qty of this product
+                                        </button>
+                                    </div>
                                 </div>
                                 <div>
                                     <label
@@ -388,20 +405,21 @@
                 </div>
                 <!--Create Modal content End -->
             </div>
-            <!-- Testing -->
         </div>
+        <!-- Show Modal -->
+        <ProductShow />
     </div>
 </template>
 
 <script setup>
 import { usecrudStore } from "../stores/crud";
 import { useAuthStore } from "../stores/auth";
-import QuickSearchProducts from "../components/QuickSearchProducts.vue";
+import QuickSearchProducts from "../components/BackendSerarchBar.vue";
 import { initFlowbite } from "flowbite";
 import { ref, onMounted } from "vue";
 import Pagination from "../components/pagination.vue";
 import SkeletonCom from "../components/SkeletonComponents.vue";
-
+import ProductShow from "../components/ProductShow.vue";
 const store = usecrudStore();
 const auth = useAuthStore();
 const Categorystatus = "paginate";
@@ -410,6 +428,9 @@ onMounted(async () => {
     await store.getCategories(Categorystatus);
     initFlowbite();
 });
+function ProductShowFunction(product) {
+    store.product_update_form = product;
+}
 const form = ref({
     name: "",
     brand: "",
@@ -425,8 +446,16 @@ const onChange = (e) => {
     console.log("blah blah: ", form.value);
 };
 function createProduct(params) {
+    store.product_form_errors = null;
     store.createProduct(params);
-    document.getElementById("createModalCloseBtn").click();
+    setTimeout(() => {
+        if (!store.product_form_errors) {
+            document.getElementById("createModalCloseBtn").click();
+        }
+    }, 2000);
+}
+function OpenPrductModal() {
+    store.product_create_modal_status = true;
 }
 const fileInput = ref();
 const previewImage = ref(null);

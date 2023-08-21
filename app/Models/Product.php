@@ -28,4 +28,8 @@ class Product extends Model
     {
         return $this->belongsToMany(Category::class);
     }
+    public function orderitem()
+    {
+        return $this->belongsTo(OrderItem::class);
+    }
 }

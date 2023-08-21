@@ -18,11 +18,7 @@
                     class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-300 focus:border-red-300 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-red-300 dark:focus:border-red-300 dark:shadow-sm-light"
                     placeholder="name@flowbite.com"
                 />
-                <div v-if="auth.Register_auth_error?.email" class="my-3 text-center border-2 border-red-400 rounded-lg border-opacity-25 bg-red-300 bg-opacity-30">
-                        <p class="text-red-600">
-                            {{ auth.Register_auth_error.email[0] }}
-                        </p>
-                    </div>
+              
             </div>
             <div class="mb-6">
                 <label

@@ -5,10 +5,19 @@
     >
         <cart/>
     </div> -->
-    
-    <div class="flex justify-center lg:justify-around bg-gray-100 ">
-        
-        <div class="flex justify-center min-h-screen w-full" :class="{ 'lg:w-auto mx-5': store.cartBtnStatus, 'lg:w-screen ': !store.cartBtnStatus}">
+    <div class="" :class="{ hidden: !store.cartBtnStatus }">
+        <div style="width: 100vw" class="lg:hidden w-screen absolute">
+                <cartformobile />
+            </div>
+    </div>
+    <div class="lg:flex justify-center lg:justify-around bg-gray-100" :class="{ hidden: store.cartBtnStatus, flex: !store.cartBtnStatus}">
+        <div
+            class="flex justify-center min-h-screen w-full"
+            :class="{
+                'lg:w-auto mx-5': store.cartBtnStatus,
+                'lg:w-screen ': !store.cartBtnStatus,
+            }"
+        >
             <div
                 v-if="store.products_search_error"
                 class="text-center align-middle"
@@ -27,11 +36,10 @@
                 <SkeletonCard />
             </div>
         </div>
-        <div class="" :class=" {'hidden' : !store.cartBtnStatus}">
-         <div class="hidden lg:flex cart-holder">
-            <cart/>
-         </div>
-            
+        <div class="" :class="{ hidden: !store.cartBtnStatus }">
+            <div class="hidden lg:flex cart-holder">
+                <cart />
+            </div>
         </div>
     </div>
 </template>
@@ -42,6 +50,8 @@ import { initFlowbite } from "flowbite";
 import Product from "./Product.vue";
 import { useUserStore } from "../../stores/user_view";
 import cart from "../../components/user_view/cart.vue";
+import cartformobile from "../../components/user_view/CartForMobile.vue";
+
 import SkeletonCard from "../../components/user_view/SkeletonComponents.vue";
 const store = useUserStore();
 const scroll = ref(0);
@@ -57,7 +67,7 @@ function onScroll(e) {
 .cart-top {
     top: 80px;
 }
-.cart-holder{
+.cart-holder {
     width: 400px;
 }
 .cart-animation {

@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Http\Resources\ProductResource;
 use App\Models\Category;
 use Illuminate\Support\Facades\File;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -93,8 +94,8 @@ class ProductController extends Controller
                 $file->move($path, $fileName);
                 $product->profile = $fileName;
                 $product->save();
-    
             }
+            
             $product->categories()->attach($request->categories);
             return new ProductResource($product);
        
@@ -124,9 +125,55 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+        $validator = Validator::make(request()->all(), [
+            'name' => ["required",Rule::unique("products")->ignore($product->id)],
+            'description' => 'required',
+            'brand' => 'required',
+            'qty' => 'required',
+            'price' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ]);
+        }
+        
+        if ($request->qty > 0) {
+            $status = 'Instock';
+        } else {
+            $status = 'Outstock';
+        }
+        $product->brand = $request->brand;
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->qty = $request->qty;
+        $product->status = $status;
+        $product->update();
+        $product->categories()->detach();
+        $product->categories()->attach($request->categories);
+        if ($request->hasFile("profile")) {
+            $file = $request->file("profile");
+            $path = public_path("images/products/" . $product->id);
+            $fileName = "product" . $product->id . "." . $file->getClientOriginalExtension();
+            if (File::exists($path)) {
+                File::deleteDirectory($path);
+            }
+            File::makeDirectory($path);
+            $file->move($path, $fileName);
+            $product->profile = $fileName;
+            $product->save();
+            return response()->json([
+                'message' => "Photo was changed",
+            ]);
+        }
+        return response()->json([
+            'message' => "Photo does not change",
+        ]);
+        
     }
 
     /**
